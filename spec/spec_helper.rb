@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'action_counter'
 require 'pry'
+require 'fakeredis/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

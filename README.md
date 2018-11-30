@@ -1,9 +1,5 @@
 # ActionCounter
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/action_counter`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,7 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'action_counter'
+
+# array = [] # in memory array
+array = Redis::List.new('redis_key')
+
+counter = ActionCounter.new(array)
+counter.audit('action1') { sleep 1 }
+counter.audit('action1') { sleep 2 }
+counter.audit('action2') { sleep 1 }
+
+counter.results(sort_key: :sum) # [{action_name: action1, count: 2, sum: 3, min: 1, max: 2, avg: 1.5},
+                                #  {action_name: action2, count: 1, sum: 1, min: 1, max: 1, avg: 1}]
+```
+
 
 ## Development
 
@@ -32,7 +42,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/action_counter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bluerabbit/action_counter.
 
 ## License
 
